@@ -1,3 +1,14 @@
+# Docker
+
+## 如何執行
+指定至 fastapi-supabase 資料夾
+> docker compose up --build
+
+Open http://localhost:8000/docs 可以進到 Swagger API 介面
+
+---
+
+# API Calling 邏輯
 ## auth/register
 **直接註冊，不需要 email 驗證:** confirm_immediately = True
 **需要 email 驗證(email 必須真實存在):** confirm_immediately = false
