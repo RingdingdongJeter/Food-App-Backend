@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import sync
 from app.routes import auth as auth_routes
+from app.routes import relation as friends_routes
 
 # 🟢 Logging 設定
 logging.basicConfig(
@@ -33,3 +34,4 @@ async def shutdown_event():
 
 app.include_router(auth_routes.router)
 app.include_router(sync.router)
+app.include_router(friends_routes.router)
