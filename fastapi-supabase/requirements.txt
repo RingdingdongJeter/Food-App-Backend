@@ -1,0 +1,6 @@
+fastapi[all]
+uvicorn
+supabase>=2.4.0
+python-dotenv
+
+python-jose[cryptography]
