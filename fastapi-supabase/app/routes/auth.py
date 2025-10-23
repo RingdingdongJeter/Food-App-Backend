@@ -110,3 +110,4 @@ def env_ok():
         "has_service": bool(settings.SUPABASE_SERVICE_ROLE_KEY),
         "has_jwt_secret": bool(settings.SUPABASE_JWT_SECRET),
     }
+    

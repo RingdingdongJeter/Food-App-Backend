@@ -2,14 +2,14 @@ from fastapi import APIRouter, HTTPException, Depends
 from datetime import datetime, timezone
 
 from app.core.auth import get_current_user
-from app.core.supabase_client import get_user_client
+from app.core.supabase_client import get_admin_client
 
 router = APIRouter()
 
 @router.post("/sync/pull")
 async def pull_changes(last_pulled_at: int | None = None, current_user: dict = Depends(get_current_user)):
     try:
-        sb = get_user_client(current_user["token"])
+        sb = get_admin_client()
         data = (
             sb.table("records")
               .select("*")
@@ -27,7 +27,7 @@ async def pull_changes(last_pulled_at: int | None = None, current_user: dict = D
 @router.post("/sync/push")
 async def push_changes(payload: dict, current_user: dict = Depends(get_current_user)):
     try:
-        sb = get_user_client(current_user["token"])
+        sb = get_admin_client()
 
         created = payload.get("created", [])
         updated = payload.get("updated", [])
@@ -47,3 +47,7 @@ async def push_changes(payload: dict, current_user: dict = Depends(get_current_u
         return {"status": "success"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/whoami")
+def whoami(current_user: dict = Depends(get_current_user)):
+    return {"user_id": current_user["id"], "email": current_user["email"]}
